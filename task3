@@ -1,0 +1,59 @@
+from ctypes import _NamedFuncPointer
+import random
+
+def load_questions():
+    questions = [
+        {
+            "question": "What is the capital of France?",
+            "choices": ["Berlin", "Paris", "London", "Madrid"],
+            "correct_answer": "Paris"
+        },
+        {
+            "question": "Which planet is known as the Red Planet?",
+            "choices": ["Mars", "Venus", "Jupiter", "Saturn"],
+            "correct_answer": "Mars"
+        },
+        {
+            "question": "What is the largest mammal in the world?",
+            "choices": ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+            "correct_answer": "Blue Whale"
+        }
+        # Add more questions as needed
+    ]
+    return questions
+
+def display_question(question_data):
+    print(question_data["question"])
+    for i, choice in enumerate(question_data["choices"], 1):
+        print(f"{i}. {choice}")
+
+def evaluate_answer(user_answer, correct_answer):
+    return user_answer.lower() == correct_answer.lower()
+
+def play_quiz():
+    score = 0
+    questions = load_questions()
+    
+    print("Welcome to the Quiz Game!")
+    print("Rules: Answer multiple-choice questions to test your knowledge.")
+    
+    for question_data in random.sample(questions, len(questions)):
+        display_question(question_data)
+        user_answer = input("Your answer: ")
+
+        if evaluate_answer(user_answer, question_data["correct_answer"]):
+            print("Correct!")
+            score += 1
+        else:
+            print(f"Incorrect! The correct answer is: {question_data['correct_answer']}")
+
+    print(f"\nFinal Score: {score}/{len(questions)}")
+    play_again = input("Do you want to play again? (yes/no): ").lower()
+    
+    if play_again == "yes":
+        play_quiz()
+    else:
+        print("Thank you for playing!")
+
+if __name__ == "__main__":
+    play_quiz()
